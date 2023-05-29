@@ -13,8 +13,12 @@ import org.springframework.core.io.Resource;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
+import static fr.esgi.rent.samples.RentalPropertyDtoSample.oneRentalPropertyResponse;
 import static fr.esgi.rent.samples.RentalPropertyDtoSample.rentalPropertyResponseList;
+import static fr.esgi.rent.samples.RentalPropertyEntitySample.oneRentalPropertyEntity;
 import static fr.esgi.rent.samples.RentalPropertyEntitySample.rentalPropertyEntities;
 import static fr.esgi.rent.utils.TestUtils.readResource;
 import static org.mockito.Mockito.*;
@@ -27,6 +31,9 @@ class RentalPropertyResourceTest {
 
     @Value("classpath:/json/rentalProperties.json")
     private Resource rentalProperties;
+
+    @Value("classpath:/json/rentalProperty.json")
+    private Resource rentalProperty;
 
     @Autowired
     private MockMvc mockMvc;
@@ -52,6 +59,40 @@ class RentalPropertyResourceTest {
         verify(rentalPropertyRepository).findAll();
         verify(rentalPropertyDtoMapper).mapToDtoList(rentalPropertyEntities);
         verifyNoMoreInteractions(rentalPropertyRepository, rentalPropertyDtoMapper);
+    }
+
+    @Test
+    void shouldGetRentalPropertyById() throws Exception {
+        RentalPropertyEntity rentalPropertyEntity = oneRentalPropertyEntity();
+        RentalPropertyResponseDto rentalPropertyResponseDto = oneRentalPropertyResponse();
+
+        String id = "1a8ed763-928c-4155-bee9-fdbaaadc15f3";
+
+        when(rentalPropertyRepository.findById(UUID.fromString(id))).thenReturn(Optional.of(rentalPropertyEntity));
+        when(rentalPropertyDtoMapper.mapToDto(rentalPropertyEntity)).thenReturn(rentalPropertyResponseDto);
+
+        mockMvc.perform(get("/api/rental-properties/{id}", id))
+                .andExpect(status().isOk())
+                .andExpect(content().json(readResource(rentalProperty)));
+
+        verify(rentalPropertyRepository).findById(UUID.fromString(id));
+        verify(rentalPropertyDtoMapper).mapToDto(rentalPropertyEntity);
+        verifyNoMoreInteractions(rentalPropertyRepository, rentalPropertyDtoMapper);
+    }
+
+    @Test
+    void givenNoExistentRentalPropertyId_shouldThrowNotFoundRentalPropertyException() throws Exception {
+        String id = "1a8ed763-928c-4155-bee9-fdbaaadc15f3";
+
+        when(rentalPropertyRepository.findById(UUID.fromString(id))).thenReturn(Optional.empty());
+
+        mockMvc.perform(get("/api/rental-properties/{id}", id))
+                .andExpect(status().isNotFound())
+                .andExpect(content().json("{\"message\":\"Le bien immobilier " + id + " est introuvable\"}"));
+
+        verify(rentalPropertyRepository).findById(UUID.fromString(id));
+        verifyNoInteractions(rentalPropertyDtoMapper);
+        verifyNoMoreInteractions(rentalPropertyRepository);
     }
 
 }
