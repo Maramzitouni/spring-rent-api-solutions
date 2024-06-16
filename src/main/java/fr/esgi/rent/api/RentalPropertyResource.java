@@ -13,9 +13,10 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/rent-properties-api")
 public class RentalPropertyResource {
 
     private final RentalPropertyRepository rentalPropertyRepository;
@@ -49,6 +50,11 @@ public class RentalPropertyResource {
         RentalPropertyEntity savedRentalProperty = rentalPropertyRepository.save(rentalPropertyEntity);
 
         return rentalPropertyDtoMapper.mapToDto(savedRentalProperty);
+    }
+
+    @DeleteMapping("/rental-properties/{id}")
+    public void deleteRentalProperty(@PathVariable String id) {
+        rentalPropertyRepository.deleteById(UUID.fromString(id));
     }
 
 }

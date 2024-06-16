@@ -20,7 +20,7 @@
         <lombok.version>1.18.24</lombok.version>
         <testcontainers.version>1.17.6</testcontainers.version>
         <spring-boot-maven-plugin.version>3.0.2</spring-boot-maven-plugin.version>
-        <lombok.version>1.18.24</lombok.version>
+        <lombok.version>1.18.30</lombok.version>
         <jakarta.validation-api.version>3.0.2</jakarta.validation-api.version>
     </properties>
 

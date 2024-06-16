@@ -20,13 +20,13 @@ public class RentalPropertyDtoMapper {
 
     public RentalPropertyResponseDto mapToDto(RentalPropertyEntity rentalProperty) {
         return new RentalPropertyResponseDto(
-                rentalProperty.getDescription(),
                 rentalProperty.getAddress(),
-                rentalProperty.getTown(),
+                rentalProperty.getArea(),
+                rentalProperty.getDescription(),
                 rentalProperty.getPropertyType().getDesignation(),
                 rentalProperty.getRentAmount(),
                 rentalProperty.getSecurityDepositAmount(),
-                rentalProperty.getArea());
+                rentalProperty.getTown());
     }
 
     public RentalPropertyEntity mapToEntity(RentalPropertyRequestDto rentalPropertyRequestDto) {
@@ -38,7 +38,7 @@ public class RentalPropertyDtoMapper {
                 rentalPropertyRequestDto.rentAmount(),
                 rentalPropertyRequestDto.securityDepositAmount(),
                 rentalPropertyRequestDto.area(),
-                rentalPropertyRequestDto.bedroomsCount(),
+                rentalPropertyRequestDto.numberOfBedrooms(),
                 rentalPropertyRequestDto.floorNumber(),
                 rentalPropertyRequestDto.numberOfFloors(),
                 rentalPropertyRequestDto.constructionYear(),

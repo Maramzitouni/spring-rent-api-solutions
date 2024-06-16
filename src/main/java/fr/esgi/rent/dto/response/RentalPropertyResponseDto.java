@@ -3,11 +3,11 @@ package fr.esgi.rent.dto.response;
 import lombok.Builder;
 
 @Builder
-public record RentalPropertyResponseDto(String description,
-                                        String address,
-                                        String town,
+public record RentalPropertyResponseDto(String address,
+                                        double area,
+                                        String description,
                                         String propertyType,
                                         double rentAmount,
                                         double securityDepositAmount,
-                                        double area) {
+                                        String town) {
 }
