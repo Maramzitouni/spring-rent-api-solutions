@@ -49,4 +49,24 @@ public class RentalPropertyDtoMapper {
                 rentalPropertyRequestDto.hasParkingSpace());
     }
 
+    public void updateEntity(RentalPropertyRequestDto rentalPropertyRequestDto, RentalPropertyEntity rentalProperty) {
+        rentalProperty.setDescription(rentalPropertyRequestDto.description());
+        rentalProperty.setTown(rentalPropertyRequestDto.town());
+        rentalProperty.setAddress(rentalPropertyRequestDto.address());
+        rentalProperty.setPropertyType(new PropertyTypeEntity(rentalPropertyRequestDto.propertyType()));
+        rentalProperty.setRentAmount(rentalPropertyRequestDto.rentAmount());
+        rentalProperty.setSecurityDepositAmount(rentalPropertyRequestDto.securityDepositAmount());
+        rentalProperty.setArea(rentalPropertyRequestDto.area());
+        rentalProperty.setNumberOfBedrooms(rentalPropertyRequestDto.numberOfBedrooms());
+        rentalProperty.setFloorNumber(rentalPropertyRequestDto.floorNumber());
+        rentalProperty.setNumberOfFloors(rentalPropertyRequestDto.numberOfFloors()); // Assuming numberOfFloors was a typo
+        rentalProperty.setConstructionYear(rentalPropertyRequestDto.constructionYear());
+        rentalProperty.setEnergyClassification(new EnergyClassificationEntity(rentalPropertyRequestDto.energyClassification()));
+        rentalProperty.setHasElevator(rentalPropertyRequestDto.hasElevator());
+        rentalProperty.setHasIntercom(rentalPropertyRequestDto.hasIntercom());
+        rentalProperty.setHasBalcony(rentalPropertyRequestDto.hasBalcony());
+        rentalProperty.setHasParkingSpace(rentalPropertyRequestDto.hasParkingSpace());
+    }
+
+
 }

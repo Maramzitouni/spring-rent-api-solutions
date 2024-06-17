@@ -34,7 +34,7 @@ public class RentalPropertyDtoSample {
                 .rentAmount(750.90)
                 .securityDepositAmount(1200.90)
                 .area(37.48)
-                .bedroomsCount(2)
+                .numberOfBedrooms(2)
                 .floorNumber(1)
                 .numberOfFloors(3)
                 .constructionYear(1990)
